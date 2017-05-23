@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Socket io</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <style>
+    #messages { list-style-type: none; margin: 0; padding: 0; }
+    #messages li { padding: 5px 10px; }
+    #messages li:nth-child(odd) { background: #eee; }
+    #messages { margin-bottom: 40px }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <ul id="messages"></ul>
+        <form action="" class="col s12">
+          <input id="m" autocomplete="off" class="col s10"/>
+          <button class="btn orange darken-3 col s2">Enviar</button>
+        </form>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+    <script>
+    $(function(){
+      var socket = io()
+      $('form').submit(function (){
+        socket.emit('chat message', $('#m').val())
+        $('#rm').val('')
+        return false
+      })
+      socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg))
+      })
+    })
+    </script>
+  </body>
+</html>
